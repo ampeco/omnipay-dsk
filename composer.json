@@ -1,0 +1,35 @@
+{
+    "name": "ampeco/omnipay-dsk",
+    "description": "Omnipay plugin for: https://uat.dskbank.bg/sandbox/integration/api/rest/rest.html",
+    "version": "0.0.1",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Alexander Alexiev",
+            "email": "alexander.alexiev@ampeco.com"
+        },
+        {
+            "name": "Ivan Mirchev",
+            "email": "ivan.mirchev@ampeco.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Ampeco\\OmnipayDsk\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.1",
+        "ext-openssl": "*",
+        "omnipay/common": "^3.2",
+        "php-http/httplug": "^1.0|^2.0",
+        "symfony/http-client": "^6.2",
+        "nyholm/psr7": "^1.0"
+    },
+    "config": {
+        "allow-plugins": {
+            "php-http/discovery": true
+        }
+    }
+}
