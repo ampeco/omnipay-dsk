@@ -2,21 +2,13 @@
 
 namespace Ampeco\OmnipayDsk\Messages;
 
-class DeleteCardRequest extends AbstractRequest
+class CreatePurchaseRequest extends CreateCardRequest
 {
-
-    /**
-     * @return mixed
-     */
-    public function getEndpoint(): string
-    {
-        return '/rest/unBindCard.do';
-    }
 
     public function getData(): array
     {
         $data = parent::getData();
-        unset($data['language']);
+        unset($data['features']);
         $data['bindingId'] = $this->getBindingId();
         return $data;
     }
@@ -28,6 +20,6 @@ class DeleteCardRequest extends AbstractRequest
      */
     protected function createResponse(array $data, int $statusCode): Response
     {
-        return new Response($this, $data, $statusCode);
+        return new CreatePurchaseResponse($this, $data, $statusCode);
     }
 }

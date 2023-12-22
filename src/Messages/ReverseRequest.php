@@ -8,12 +8,12 @@ class ReverseRequest extends AbstractRequest
     /**
      * @return mixed
      */
-    function getEndpoint()
+    public function getEndpoint(): string
     {
         return '/rest/reverse.do';
     }
 
-    public function getData()
+    public function getData(): array
     {
         return array_merge(parent::getData(), [
             'orderId' => $this->getOrderId(),
@@ -25,7 +25,7 @@ class ReverseRequest extends AbstractRequest
      * @param int $statusCode
      * @return mixed
      */
-    function createResponse(array $data, int $statusCode)
+    protected function createResponse(array $data, int $statusCode): Response
     {
         return new Response($this, $data, $statusCode);
     }

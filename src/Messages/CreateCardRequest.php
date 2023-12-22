@@ -9,7 +9,7 @@ class CreateCardRequest extends AbstractRequest
     /**
      * @return mixed
      */
-    function getEndpoint()
+    public function getEndpoint(): string
     {
         return '/rest/register.do';
     }
@@ -17,7 +17,7 @@ class CreateCardRequest extends AbstractRequest
     /**
      * @return mixed
      */
-    public function getData()
+    public function getData(): array
     {
         return array_merge(parent::getData(), [
             'amount' => $this->getAmountInteger(),
@@ -34,7 +34,7 @@ class CreateCardRequest extends AbstractRequest
     /**
      * @throws \JsonException
      */
-    public function createResponse(array $data, int $statusCode): CreateCardResponse
+    protected function createResponse(array $data, int $statusCode): Response
     {
         return new CreateCardResponse($this, $data, $statusCode);
     }

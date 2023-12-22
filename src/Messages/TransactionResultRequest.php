@@ -8,7 +8,7 @@ class TransactionResultRequest extends AbstractRequest
     /**
      * @return mixed
      */
-    function getEndpoint()
+    public function getEndpoint(): string
     {
         return '/rest/getOrderStatusExtended.do';
     }
@@ -18,7 +18,7 @@ class TransactionResultRequest extends AbstractRequest
      * @param int $statusCode
      * @return mixed
      */
-    function createResponse(array $data, int $statusCode)
+    protected function createResponse(array $data, int $statusCode): Response
     {
         return new TransactionResultResponse($this, $data, $statusCode);
     }
@@ -26,7 +26,7 @@ class TransactionResultRequest extends AbstractRequest
     /**
      * @return mixed
      */
-    public function getData()
+    public function getData(): array
     {
         return array_merge(parent::getData(), [
             'orderId' => $this->getOrderId(),

@@ -19,12 +19,23 @@ class Response extends AbstractResponse
      */
     public function isSuccessful(): bool
     {
-        return array_key_exists('errorCode', $this->data)
-            && (int)$this->data['errorCode'] === 0;
+        return $this->code >= 200 && $this->code < 300
+                && (!array_key_exists('errorCode', $this->data)
+                    || (int)$this->data['errorCode'] === 0);
     }
 
-    public function getCode()
+    public function getCode(): int
     {
         return $this->code;
+    }
+
+    public function getErrorCode()
+    {
+        return $this->data['errorCode'] ?? null;
+    }
+
+    public function getErrorMessage()
+    {
+        return $this->data['errorMessage'] ?? null;
     }
 }

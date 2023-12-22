@@ -2,7 +2,10 @@
 
 namespace Ampeco\OmnipayDsk;
 
+use Ampeco\OmnipayDsk\Messages\CompletePurchaseRequest;
 use Ampeco\OmnipayDsk\Messages\CreateCardRequest;
+use Ampeco\OmnipayDsk\Messages\CreatePurchaseRequest;
+use Ampeco\OmnipayDsk\Messages\CreatePurchaseResponse;
 use Ampeco\OmnipayDsk\Messages\DeleteCardRequest;
 use Ampeco\OmnipayDsk\Messages\ReverseRequest;
 use Ampeco\OmnipayDsk\Messages\TransactionResultRequest;
@@ -42,26 +45,25 @@ class Gateway extends AbstractGateway
         return $this->createRequest(DeleteCardRequest::class, $options);
     }
 
+    public function purchase(array $options = array()): RequestInterface|false
+    {
+        /** @var CreatePurchaseResponse $response */
+        $response = $this->createRequest(CreatePurchaseRequest::class, $options)->send(); //register payment
+
+        if($response->isSuccessful()) {
+            return $this->createRequest(CompletePurchaseRequest::class, [ //confirm payment
+                'orderId' => $response->getOrderId(),
+                'bindingId' => $options['bindingId'],
+                'language' => $options['language'],
+            ]);
+        }
+        return false;
+    }
+
     protected function createRequest($class, array $parameters)
     {
         return parent::createRequest($class, $parameters)->setGateway($this);
     }
-
-//    public function __call($name, $arguments)
-//    {
-//        // TODO: Implement @method \Omnipay\Common\Message\NotificationInterface acceptNotification(array $options = array())
-//        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface authorize(array $options = array())
-//        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface completeAuthorize(array $options = array())
-//        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface capture(array $options = array())
-//        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface purchase(array $options = array())
-//        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface completePurchase(array $options = array())
-//        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface refund(array $options = array())
-//        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface fetchTransaction(array $options = [])
-//        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface void(array $options = array())
-//        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface createCard(array $options = array())
-//        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface updateCard(array $options = array())
-//        // TODO: Implement @method \Omnipay\Common\Message\RequestInterface deleteCard(array $options = array())
-//    }
 
     public function signHeaders(string $body)
     {

@@ -15,9 +15,9 @@ abstract class AbstractRequest extends OmniPayAbstractRequest
 
     private Gateway $gateway;
 
-    abstract function getEndpoint();
+    abstract public function getEndpoint(): string;
 
-    abstract function createResponse(array $data, int $statusCode);
+    abstract protected function createResponse(array $data, int $statusCode): Response;
 
     public function setGateway(Gateway $gateway): static
     {
@@ -34,7 +34,7 @@ abstract class AbstractRequest extends OmniPayAbstractRequest
         ]);
     }
 
-    public function sendData($data)
+    public function sendData($data): Response
     {
         $body = http_build_query($data);
         $response = $this->httpClient->request(
@@ -44,12 +44,12 @@ abstract class AbstractRequest extends OmniPayAbstractRequest
             $body
         );
         return $this->createResponse(
-            json_decode($response->getBody()->getContents(), true),
+            json_decode($response->getBody()->getContents(), true, flags: JSON_THROW_ON_ERROR),
             $response->getStatusCode(),
         );
     }
 
-    public function getData()
+    public function getData(): array
     {
         return [
             'userName' => $this->getParameter('username'),
