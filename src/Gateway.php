@@ -2,7 +2,10 @@
 
 namespace Ampeco\OmnipayDsk;
 
-use Ampeco\OmnipayDsk\Messages\CompletePurchaseRequest;
+use Ampeco\OmnipayDsk\Messages\CaptureRequest;
+use Ampeco\OmnipayDsk\Messages\CompleteOrderRequest;
+use Ampeco\OmnipayDsk\Messages\CreateAuthorizeRequest;
+use Ampeco\OmnipayDsk\Messages\CreateAuthorizeResponse;
 use Ampeco\OmnipayDsk\Messages\CreateCardRequest;
 use Ampeco\OmnipayDsk\Messages\CreatePurchaseRequest;
 use Ampeco\OmnipayDsk\Messages\CreatePurchaseResponse;
@@ -51,13 +54,31 @@ class Gateway extends AbstractGateway
         $response = $this->createRequest(CreatePurchaseRequest::class, $options)->send(); //register payment
 
         if($response->isSuccessful()) {
-            return $this->createRequest(CompletePurchaseRequest::class, [ //confirm payment
-                'orderId' => $response->getOrderId(),
-                'bindingId' => $options['bindingId'],
-                'language' => $options['language'],
+            return $this->createRequest(CompleteOrderRequest::class, [ //confirm payment
+               'orderId' => $response->getOrderId(),
+               'bindingId' => $options['bindingId'],
+               'language' => $options['language'],
             ]);
         }
         return false;
+    }
+    public function authorize(array $options = array()): RequestInterface
+    {
+        /** @var CreateAuthorizeResponse $response */
+        $response = $this->createRequest(CreateAuthorizeRequest::class, $options)->send();
+        if($response->isSuccessful()) {
+            return $this->createRequest(CompleteOrderRequest::class, [ //confirm payment
+               'orderId' => $response->getOrderId(),
+               'bindingId' => $options['bindingId'],
+               'language' => $options['language'],
+            ]);
+        }
+        return false;
+    }
+
+    public function capture(array $options = [])
+    {
+        return $this->createRequest(CaptureRequest::class, $options);
     }
 
     protected function createRequest($class, array $parameters)

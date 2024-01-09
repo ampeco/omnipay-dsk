@@ -2,7 +2,7 @@
 
 namespace Ampeco\OmnipayDsk\Messages;
 
-class CompletePurchaseRequest extends AbstractRequest
+class CompleteOrderRequest extends AbstractRequest
 {
 
     /**
@@ -19,7 +19,7 @@ class CompletePurchaseRequest extends AbstractRequest
             'mdOrder' => $this->getOrderId(),
             'bindingId' => $this->getBindingId(),
             //TODO: Look at https://uat.dskbank.bg/sandbox/integration/api/rest/rest.html#payment-for-order for possible "tii" values
-            //probably will be changed when 3DS(SCA) is needed to be implemented
+            //probably will be changed when 3DS(SCA) is need to be implemented
             'tii' => 'U', // penalty mode - no CVV|CVC, no 3DS
         ]);
     }
@@ -31,6 +31,7 @@ class CompletePurchaseRequest extends AbstractRequest
      */
     function createResponse(array $data, int $statusCode): Response
     {
-        return new CompletePurchaseResponse($this, $data, $statusCode);
+        $data['orderId'] = $this->getOrderId();
+        return new CompleteOrderResponse($this, $data, $statusCode);
     }
 }

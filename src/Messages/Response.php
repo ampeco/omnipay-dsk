@@ -24,6 +24,8 @@ class Response extends AbstractResponse
                     || (int)$this->data['errorCode'] === 0);
     }
 
+
+
     public function getCode(): int
     {
         return $this->code;

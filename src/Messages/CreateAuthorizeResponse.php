@@ -2,7 +2,7 @@
 
 namespace Ampeco\OmnipayDsk\Messages;
 
-class CreatePurchaseResponse extends CreateCardResponse
+class CreateAuthorizeResponse extends Response
 {
     use RegisteredOrder;
 }

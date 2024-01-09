@@ -5,7 +5,7 @@ namespace Ampeco\OmnipayDsk\Messages;
 /**
  * @see https://uat.dskbank.bg/sandbox/integration/api/rest/rest.html#stored-credential-payment
  */
-class CompletePurchaseResponse extends Response
+class CompleteOrderResponse extends Response
 {
 
     public function getDisplayErrorMessage()
@@ -48,5 +48,11 @@ class CompletePurchaseResponse extends Response
     public function getTermUrl()
     {
         return $this->data['termUrl'] ?? null;
+    }
+
+    public function getTransactionReference()
+    {
+        // orderId is not part of the response so it should be passed by data param in constructor
+        return $this->data['orderId'];
     }
 }

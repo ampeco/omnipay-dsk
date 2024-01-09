@@ -9,7 +9,8 @@ trait RegisteredOrder
      */
     public function isSuccessful(): bool
     {
-        return array_key_exists('orderId', $this->data)
+        return parent::isSuccessful()
+            && array_key_exists('orderId', $this->data)
             && array_key_exists('formUrl', $this->data);
     }
 
@@ -19,6 +20,11 @@ trait RegisteredOrder
     }
 
     public function getTransactionReference()
+    {
+        return $this->data['orderId'];
+    }
+
+    public function getOrderId()
     {
         return $this->data['orderId'];
     }
