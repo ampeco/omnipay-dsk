@@ -26,7 +26,6 @@ class CreateCardRequest extends AbstractRequest
             'returnUrl' => $this->getReturnUrl(),
             'clientId' => $this->getClientId(),
             'description' => $this->getDescription(),
-            //'pageView' => $this->getPageView(),
             'features' => $this->getFeatures(),
         ]);
     }

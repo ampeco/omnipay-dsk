@@ -115,7 +115,6 @@ class Gateway extends AbstractGateway
     private function createSignature(string $privateKey, string $password, string $hash): string
     {
         $pKey = openssl_pkey_get_private($privateKey, $password);
-        //$signature = '';
         openssl_sign($hash, $signature, $pKey, OPENSSL_ALGO_SHA256);
         return $signature;
     }

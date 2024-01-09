@@ -10,7 +10,6 @@ class Response extends AbstractResponse
 
     public function __construct(RequestInterface $request, $data, protected int $code)
     {
-        //$data = json_decode($data, true, flags: JSON_THROW_ON_ERROR);
         parent::__construct($request, $data);
     }
 
