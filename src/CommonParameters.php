@@ -2,7 +2,7 @@
 
 namespace Ampeco\OmnipayDsk;
 
-trait GetAndSet
+trait CommonParameters
 {
 
     public function setClientId($value): void

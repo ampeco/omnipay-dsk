@@ -4,12 +4,12 @@ namespace Ampeco\OmnipayDsk\Messages;
 
 
 use Ampeco\OmnipayDsk\Gateway;
-use Ampeco\OmnipayDsk\GetAndSet;
+use Ampeco\OmnipayDsk\CommonParameters;
 use Omnipay\Common\Message\AbstractRequest as OmniPayAbstractRequest;
 
 abstract class AbstractRequest extends OmniPayAbstractRequest
 {
-    use GetAndSet;
+    use CommonParameters;
     protected const HTTP_METHOD = 'POST';
     protected const BASE_URL = 'https://uat.dskbank.bg/payment';
 

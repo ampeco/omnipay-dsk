@@ -18,7 +18,7 @@ use Omnipay\Common\Message\RequestInterface;
 class Gateway extends AbstractGateway
 {
 
-    use GetAndSet;
+    use CommonParameters;
 
     /**
      * @return string
