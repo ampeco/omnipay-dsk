@@ -11,7 +11,8 @@ abstract class AbstractRequest extends OmniPayAbstractRequest
 {
     use CommonParameters;
     protected const HTTP_METHOD = 'POST';
-    protected const BASE_URL = 'https://uat.dskbank.bg/payment';
+    protected const TEST_URL = 'https://uat.dskbank.bg/payment';
+    protected const PROD_URL = 'https://epg.dskbank.bg/payment';
 
     private Gateway $gateway;
 
@@ -39,7 +40,7 @@ abstract class AbstractRequest extends OmniPayAbstractRequest
         $body = http_build_query($data);
         $response = $this->httpClient->request(
             self::HTTP_METHOD,
-            self::BASE_URL . $this->getEndpoint(),
+            $this->baseURL() . $this->getEndpoint(),
             $this->getHeaders($body),
             $body
         );
@@ -58,4 +59,10 @@ abstract class AbstractRequest extends OmniPayAbstractRequest
         ];
     }
 
+    public function baseURL()
+    {
+        return $this?->gateway->getTestMode()
+            ? self::TEST_URL
+            : self::PROD_URL;
+    }
 }
