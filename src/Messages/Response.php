@@ -39,4 +39,17 @@ class Response extends AbstractResponse
     {
         return $this->data['errorMessage'] ?? null;
     }
+
+    public function getMessage()
+    {
+        $errorMessage = strtolower($this->data['errorMessage'] ?? '') === 'success'
+            ? ''
+            : $this->data['errorMessage'];
+        return @$this->data['info']
+            ?: $errorMessage
+            ?: @$this->data['displayErrorMessage']
+            ?: @$this->data['error']
+            ?: @$this->data['userMessage']
+            ?: '';
+    }
 }
