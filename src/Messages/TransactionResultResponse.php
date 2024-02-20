@@ -60,7 +60,7 @@ class TransactionResultResponse extends Response implements ProvidesCardInfo
      */
     public function getType()
     {
-        return 'unknown';
+        return $this->data['cardAuthInfo']['paymentSystem'] ?? 'unknown';
     }
 
     public function getToken()

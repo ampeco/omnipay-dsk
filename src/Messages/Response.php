@@ -44,7 +44,7 @@ class Response extends AbstractResponse
     {
         $errorMessage = strtolower($this->data['errorMessage'] ?? '') === 'success'
             ? ''
-            : $this->data['errorMessage'];
+            : @$this->data['errorMessage'];
         return @$this->data['info']
             ?: $errorMessage
             ?: @$this->data['displayErrorMessage']
