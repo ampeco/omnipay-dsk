@@ -2,7 +2,19 @@
 
 namespace Ampeco\OmnipayDsk\Messages;
 
-
+/**
+ * @see https://uat.dskbank.bg/sandbox/integration/api/rest/rest.html#order-status
+ * the result param orderStatus options:
+ * 0 - order was registered but not paid;
+ * 1 - order was authorized only and wasn't captured yet (for two-phase payments);
+ * 2 - order was authorized and captured;
+ * 3 - authorization canceled;
+ * 4 - transaction was refunded;
+ * 5 - access control server of the issuing bank initiated authorization procedure;
+ * 6 - authorization declined;
+ * 7 - pending order payment;
+ * 8 - intermediate completion for multiple partial completion.
+ */
 class TransactionResultResponse extends Response implements ProvidesCardInfo
 {
 
@@ -18,7 +30,7 @@ class TransactionResultResponse extends Response implements ProvidesCardInfo
 
     public function isPending()
     {
-        return (int)$this->data['orderStatus'] === 0;
+        return in_array((int)$this->data['orderStatus'], [0, 5, 7]);
     }
 
     public function getTransactionReference()
