@@ -10,6 +10,7 @@ use Ampeco\OmnipayDsk\Messages\CreateCardRequest;
 use Ampeco\OmnipayDsk\Messages\CreatePurchaseRequest;
 use Ampeco\OmnipayDsk\Messages\CreatePurchaseResponse;
 use Ampeco\OmnipayDsk\Messages\DeleteCardRequest;
+use Ampeco\OmnipayDsk\Messages\GetBindingsRequest;
 use Ampeco\OmnipayDsk\Messages\ReverseRequest;
 use Ampeco\OmnipayDsk\Messages\TransactionResultRequest;
 use Omnipay\Common\AbstractGateway;
@@ -74,6 +75,11 @@ class Gateway extends AbstractGateway
             ]);
         }
         return false;
+    }
+
+    public function getBindings(array $options = array()): RequestInterface
+    {
+        return $this->createRequest(GetBindingsRequest::class, $options);
     }
 
     public function capture(array $options = [])

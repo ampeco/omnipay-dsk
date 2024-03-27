@@ -1,7 +1,7 @@
 {
     "name": "ampeco/omnipay-dsk",
     "description": "Omnipay plugin for: https://uat.dskbank.bg/sandbox/integration/api/rest/rest.html",
-    "version": "1.0.5",
+    "version": "1.0.6",
     "type": "library",
     "license": "MIT",
     "authors": [
